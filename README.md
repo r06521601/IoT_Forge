@@ -1,6 +1,5 @@
 # IoT_Forge
 
-### Sensor_Chat
 ![thumbnail](src/www/images/image.PNG)
 
 ## Description
