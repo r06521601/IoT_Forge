@@ -27,3 +27,18 @@ if Windows (use <b>Node.js command line</b> from Start menu)
     set FORGE_CLIENT_ID=<<YOUR CLIENT ID FROM FORGE DEVELOPER PORTAL>>
     set FORGE_CLIENT_SECRET=<<YOUR FORGE CLIENT SECRET>>
     npm run dev
+
+## License
+
+That samples are licensed under the terms of the [MIT License](http://opensource.org/licenses/MIT).
+
+
+
+## Written by
+
+Roy Huang <br />
+
+##Reference
+Jaime Rosales D. <br /> 
+[![Twitter Follow](https://img.shields.io/twitter/follow/afrojme.svg?style=social&label=Follow)](https://twitter.com/AfroJme) <br />Forge Partner Development <br />
+<a href="http://developer.autodesk.com/">Forge Developer Portal</a> <br />
