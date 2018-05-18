@@ -95,7 +95,7 @@ var options = {
     getAccessToken: getForgeToken
 }
 
-var documentId = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6b3JlbzMvY2l2aWxidWlsZGluZzIwMTctNkYucnZ0';
+var documentId = 'urn:';
 
 Autodesk.Viewing.Initializer(options, function onInitialized() {
     Autodesk.Viewing.Document.load(documentId, onDocumentLoadSuccess, onDocumentLoadFailure);
