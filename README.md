@@ -10,7 +10,7 @@ src : Forge file include server. client .......
 
 ## How to Run
 
-The first step you should give your <urn> to ./src/www/js/index.js
+The first step you should give your  to ./src/www/js/index.js
 
 And you need to cd to ./src/ 
 
