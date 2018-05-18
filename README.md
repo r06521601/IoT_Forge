@@ -1,7 +1,7 @@
 # IoT_Forge
 
 ### Thumbnail
-![thumbnail](src/www/images/image.png)
+![thumbnail](src/www/images/image.PNG)
 
 ## Description
 
