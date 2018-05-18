@@ -1,5 +1,7 @@
 # IoT_Forge
 
+(www/images/indexpage.png)
+
 ## Description
 
 IoTtoDB.py: The code is be used for connecting DataBase.
