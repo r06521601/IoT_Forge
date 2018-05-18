@@ -15,10 +15,10 @@ def set_interval(func, sec):
 
 
 def iot_to_db():
-	conn = pymysql.connect(host="140.112.12.103", user="iot", passwd="", db="iottest")
+	conn = pymysql.connect(host="", user="", passwd="", db="")
 	myCursor = conn.cursor()
 	localtime = time.time() 
-	h= urllib.request.urlopen('https://us.wio.seeed.io/v1/node/GroveTempHumProD1/humidity?access_token=20f6c90e05f600b30320e857ec1cd0d1')
+	h= urllib.request.urlopen('')
 
 	data = json.load(h)
 	btc = data["humidity"]
