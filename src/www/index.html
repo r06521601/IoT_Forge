@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html class="no-js" lang="">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Forge Viewer Sample</title>
+
+    <!-- Common packages: JQuery & Bootstrap -->
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+
+    <link rel="stylesheet" href="/css/main.css">
+
+    <script src="/js/jquery.min.js"></script>
+    <script src="/js/moment.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+
+    <!-- The Viewer CSS -->
+    <link rel="stylesheet" href="https://developer.api.autodesk.com/modelderivative/v2/viewers/style.min.css?v=v3.3.*" type="text/css">
+
+    <!-- Viewer API -->
+    <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/three.min.js?v=v3.3.*"></script>
+    <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/viewer3D.min.js?v=v3.3.*"></script>
+    <script src="http://smoothiecharts.org/smoothie.js"></script>
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <!-- The Viewer Extensions -->
+    <script src="/extensions/SelectionMonitor.js"></script>
+    <script src="/extensions/FocusColor.js"></script>
+    <script src="/extensions/MyToolbarExt.js"></script>
+	<script src="/extensions/MyAwesomePanel"></script>
+	<script src="/extensions/MyAwesomePanelToolbarExt.js"></script>
+    <!-- The Viewer JS -->
+    <script src="/js/oauth.js"></script>
+    <script src="/js/connect.js"></script>
+	<script data-main="/js/index"  src="/js/require.js"></script>
+
+</head>
+
+
+
+    <!--NavBar-->
+    
+
+    <div class="container">
+        <!-- This is where your viewer should attach -->
+        <div class="center-block" id="viewerDiv"></div>
+       
+    </div><!-- /container -->
+
+    <footer class="text-center">
+            <p>&copy; Autodesk Forge 2017</p>
+    </footer>
+
+</html>
