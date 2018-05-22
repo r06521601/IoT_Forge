@@ -10,20 +10,20 @@ var router = express.Router();
 //////////////////////////////////////////////////
 // connect to MySQL hosted on Amazon RDS
 const mysql = require('mysql');
-
+var connection = mysql.createConnection({
+    host: '',
+    user: '',
+    password: '',
+    database: ''
+});
+connection.connect();
 
 ///////////////////////////////////////////////////
 ///////////////////////////////////////////////////
 
 // wait for database
 router.get('/user/connect', function (req, res) {
-	var connection = mysql.createConnection({
-    host: '140.112.12.103',
-    user: 'iot',
-    password: '',
-    database: 'iottest'
-});
-connection.connect();
+	
 var db = connection;
 var data = "";
 db.query('SELECT * FROM `iott` ORDER BY name DESC LIMIT 10', function (error, rows, fields) {
