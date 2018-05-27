@@ -4,7 +4,7 @@
 
 ## Description
 
-IoTtoDB.py: The code is be used for connecting DataBase.
+IoTtoDB.py: The code is connecting sensor's data with dataBase.(So, you should have your own sensor and Online database.)
 
 src : Forge file include server. client .......
 
