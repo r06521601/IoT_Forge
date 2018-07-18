@@ -31,27 +31,57 @@
     <script src="/extensions/FocusColor.js"></script>
     <script src="/extensions/MyToolbarExt.js"></script>
 	<script src="/extensions/MyAwesomePanel"></script>
-	<script src="/extensions/MyAwesomePanelToolbarExt.js"></script>
+    <script src="/extensions/MyAwesomePanelToolbarExt.js"></script>
+    <script src="/extensions/simpleheat.js"></script>
     <!-- The Viewer JS -->
     <script src="/js/oauth.js"></script>
     <script src="/js/connect.js"></script>
-	<script data-main="/js/index"  src="/js/require.js"></script>
+    <script data-main="/js/index"  src="/js/require.js"></script>
+    <script id="vertexshader" type="x-shader/x-vertex">
+         
+         uniform float width;
+         uniform float height;
+         uniform vec2 corner;
+         varying vec2 vUv;
+
+         void main() {
+             float OFFSET_X = 0.5;
+             float OFFSET_Y = 0.5;
+             
+             vec3 projection = vec3(position.x, position.y, 0.);
+
+             vUv = vec2((projection.x) / width + OFFSET_X,
+                        (height + projection.y) / height - OFFSET_Y);
+             
+             gl_Position = projectionMatrix * 
+             modelViewMatrix * 
+             vec4(position, 1.0);
+         }
+         
+        </script>
+        
+        <script id="fragmentshader" type="x-shader/x-fragment">
+         uniform sampler2D tex;
+
+         varying vec2 vUv;
+
+         void main() {
+                 gl_FragColor = texture2D(tex, vUv);
+         }
+        </script>
 
 </head>
 
 
 
     <!--NavBar-->
-    
-
     <div class="container">
         <!-- This is where your viewer should attach -->
-        <div class="center-block" id="viewerDiv"></div>
+        <div class="center-block" id="viewerDiv" style="border:1px solid #d3d3d3;"></div>
+        
        
     </div><!-- /container -->
-
-    <footer class="text-center">
-            <p>&copy; Autodesk Forge 2017</p>
-    </footer>
+    
+    <div id="curve_chart" style="border:1px solid #d3d3d3;"></div>
 
 </html>
