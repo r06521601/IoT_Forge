@@ -3,12 +3,17 @@
    ========================================================================== */
 
 
-
-#viewerDiv {
-  height: 1000px; 
-  width: 1300px; 
+#viewerDiv{
+      height: 100vh;
+      float:left;
+  position: relative; 
+      width: 60%;
 }
-
+#curve_chart{
+      height: 350px;
+      float:left;
+      width: 39%;
+}
 
 
 /*.myButton {*/
