@@ -4,7 +4,9 @@
 
 ## Description
 
-IoTtoDB.py: The code is connecting sensor's data with dataBase.(So, you should have your own sensor and Online database.)
+This project show IoT data and use heatmap visualization on the Web BIM server.
+
+IoTtoDB.py: The code is connecting sensor's data with dataBase.(So, you should have your own sensor and database server.)
 
 src : Forge file include server. client .......
 
