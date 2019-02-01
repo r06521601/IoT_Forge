@@ -41,7 +41,7 @@ class MyToolbarExt extends Autodesk.Viewing.Extension {
     onToolbarCreatedBinded(event) {
         this.viewer.removeEventListener(Autodesk.Viewing.TOOLBAR_CREATED_EVENT, this.onToolbarCreatedBinded);
         this.onToolbarCreatedBinded = null;
-        //¨Æ¥ó¨ú®ø 
+        //ï¿½Æ¥ï¿½ï¿½ï¿½ï¿½ 
         this.createUI();
     }
 
@@ -115,7 +115,7 @@ function MyAwesomePanel(viewer, container, id, title, content, x, y) {
     var op = { left: false, heightAdjustment: 45, marginTop: 0 };
     this.scrollcontainer = this.createScrollContainer(op);
     
-    
+    /*
     var html = [
         '<body>',
 
@@ -124,7 +124,7 @@ function MyAwesomePanel(viewer, container, id, title, content, x, y) {
             '<div id="curve_chart" style="width: 500px; height: 400px"></div>',
 
         '</body>'
-        /*'<div class="uicomponent-panel-controls-container">',
+        '<div class="uicomponent-panel-controls-container">',
         '<div class="panel panel-default">',
         '<table class="table table-hover table-responsive" id = "clashresultstable">',
         '<thead>',
@@ -145,8 +145,8 @@ function MyAwesomePanel(viewer, container, id, title, content, x, y) {
         '</tbody>',
         '</table>',
         '</div>',
-        '</div>'*/
-    ].join('\n');
+        '</div>'
+    ].join('\n');*/
 
 
     $(this.scrollContainer).append(html);

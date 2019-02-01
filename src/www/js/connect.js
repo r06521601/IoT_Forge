@@ -20,11 +20,13 @@ $(function () {
 });
 
 function getDatabase() {
-	var result;
+  var result;
   jQuery.ajax({
     url: '/user/connect',
-	async: false,
-	
+    async: false,
+    type:"GET",
+    data:"table=iott",//this store data
+    
     success: function (data) {
 	
       //console.log('data:', data.rows[0]);

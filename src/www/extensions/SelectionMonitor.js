@@ -10,8 +10,10 @@
             var i = dbIds[0];
             clearInterval(time_control);
             console.log('Now Selected: ', dbIds);
+
             getid(i);
-            draw();
+            //draw();
+            
             
         }
         

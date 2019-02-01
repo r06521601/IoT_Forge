@@ -4,8 +4,12 @@
 var express = require('express');
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
-var app = express();
+var bodyParser = require('body-parser');
+var http = require('http');
 
+var app = express();
+app.use(bodyParser.json({limit: '50mb'}));
+app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
 
 
 // this session will be used to save the oAuth token
@@ -21,6 +25,7 @@ app.use(session({
     resave: false,
     saveUninitialized: true
 }));
+app.use(express.urlencoded({limit: '50mb'}));
 
 // prepare server routing
 app.use('/', express.static(__dirname + '/../www')); // redirect static calls
@@ -32,6 +37,7 @@ app.use('/css', express.static(__dirname + '/../node_modules/font-awesome/css'))
 app.use('/fonts', express.static(__dirname + '/../node_modules/font-awesome/fonts')) // redirect static calls
 app.use('/fonts', express.static(__dirname + '/../node_modules/bootstrap/dist/fonts')); // redirect static calls
 app.set('port', process.env.PORT || 3000); // main port
+//app.set('host', process.env.HOST || '192.168.2.3');//ip setting
 
 
 
@@ -39,6 +45,8 @@ app.set('port', process.env.PORT || 3000); // main port
 // prepare our API endpoint routing
 var oauth = require('./oauth');
 app.use('/', oauth); // redirect oauth API calls
-var connect = require('./connect');
-app.use('/', connect)
+//var connect = require('./connect');
+//app.use('/', connect)
+//var insert = require('./insert');
+//app.use('/', insert)
 module.exports = app;

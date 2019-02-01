@@ -10,10 +10,11 @@ var viewer;
 const config = {
       extensions: [
           'Autodesk.ADN.Extension.Monitor.Selection',
+          
           //'HeatMapFloorFlat',
           /*'Autodesk.ADN.Extensions.MyTool',*/
-          /*'Autodesk.ADN.Extensions.MyPanelTool'*/,
-          'Autodesk.focuscolor.contextmenu']
+          /*'Autodesk.ADN.Extensions.MyPanelTool',
+      'Autodesk.focuscolor.contextmenu'*/]
   };
   
 
@@ -36,14 +37,23 @@ var id = null;
 //res function for draw the google chat and determine show heatmap or not
 function res(r) {
     element = r;
-    s = r.name;
-	s = s.split('[')
-			s = s[1].split(']')
-			if (s[0] == "202080")
-			{
-				draw();
-            }
-    if (r.properties[0].displayValue.split(' ')[1] == "樓板")
+    s = r.dbId;
+    if (s == "12316")
+    {
+        //draw();  Realtime setinterval
+        drawChart();
+        RouteSetting(false);
+        OCWindow('close');
+        alert('空氣品質不佳，大樓門窗自動關閉!')
+    }
+    if (s == "12302")
+    {
+        firstChat();
+        OCWindow('open');
+        RouteSetting(true);
+        alert('發生地震，所有人員請依逃生路線徹散!')
+    }
+    if (r.properties[0].displayValue.split(' ')[1] == "樓板" || r.properties[0].displayValue.split(' ')[1] == "Floors")
     {
         try{
             document.getElementById('texture').remove()
@@ -83,16 +93,74 @@ function getid(i) {
 //Google圖表
 //
 /////////////////////////////////////////////////////////////////////////////////
+
+
+var v = [];
+
+$(document).ready(function() {
+    $.ajax({
+        type: "GET",
+        url: "images/c.csv",
+        dataType: "text",
+        success: function(data) {v = data.split(',');}
+     });
+});
+
 function firstChat(){
-    var ori_data = google.visualization.arrayToDataTable([
-        ['time', 'humidity'],
-      ['', 0]
-      ]);
+
+    var eurValues = [['time', 'acceleration']]
+    euri = 0;
+    v.forEach(
+        function(elem){
+        eurValues.push([euri/100,parseFloat(elem)]);
+        euri = euri+1;
+    });
+
+    var ori_data = google.visualization.arrayToDataTable(eurValues, false);
     
     var ori_options = {
-        title: 'Sensor-Humidity',
+        title: 'Sensor-Acceleration',
         curveType: 'function',
-        legend: { position: 'bottom' }
+        lineWidth: 0.6,
+        backgroundColor: 'LightGray',
+        legend: { position: 'bottom' },
+        hAxis: {            // same thing for horisontal, just use hAxis
+            viewWindow: {   // what range will be visible
+                max: 80,
+                min: 0
+            },
+            gridlines: {
+                count: 10   // how many gridlines. You can set not the step, but total count of gridlines.
+            }
+        }
+      };
+    
+    var ori_chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
+    
+    ori_chart.draw(ori_data, ori_options);
+}
+function FfirstChat(){
+
+    var eurValues = [['time', '']]
+    eurValues.push(['',0]);
+
+    var ori_data = google.visualization.arrayToDataTable(eurValues, false);
+    
+    var ori_options = {
+        title: 'Sensor',
+        curveType: 'function',
+        lineWidth: 0.6,
+        backgroundColor: 'LightGray',
+        legend: { position: 'bottom' },
+        hAxis: {            // same thing for horisontal, just use hAxis
+            viewWindow: {   // what range will be visible
+                max: 80,
+                min: 0
+            },
+            gridlines: {
+                count: 10   // how many gridlines. You can set not the step, but total count of gridlines.
+            }
+        }
       };
     
     var ori_chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
@@ -101,14 +169,13 @@ function firstChat(){
 }
 
 
-
 google.charts.load('current', { 'packages': ['corechart'] });
-google.charts.setOnLoadCallback(firstChat)
+google.charts.setOnLoadCallback(FfirstChat)
 var time_control = null;
 function drawChart() {
 	data_sensor = getDatabase();
 	var data = google.visualization.arrayToDataTable([
-          ['time', 'humidity'],
+          ['time', 'pm2.5'],
         ['', data_sensor[0].v],
         ['', data_sensor[1].v],
         ['', data_sensor[2].v],
@@ -122,8 +189,9 @@ function drawChart() {
         ]);
 
         var options = {
-          title: 'Sensor-Humidity',
+          title: 'Sensor-PM2.5',
           curveType: 'function',
+          backgroundColor: 'LightGray',
           legend: { position: 'bottom' }
         };
 
@@ -152,8 +220,10 @@ var options = {
     env: 'AutodeskProduction',
     getAccessToken: getForgeToken
 }
-
-var documentId = 'urn:';
+//civil research build 
+var documentId = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6dGVzdGluZ3VrajZodGI1Y3AyaHlmYmgzb2FicG1zeG5iY3dmcHFvL2NpdmlsYnVpbGRpbmcyMDE4LWYucnZ0';
+//thesis smaple build
+//var documentId = 'urn:dXJuOmFkc2sub2JqZWN0czpvcy5vYmplY3Q6dGVzdGluZ3VrajZodGI1Y3AyaHlmYmgzb2FicG1zeG5iY3dmcHFvL3JhbmRvbV9zYW1wbGVfY29sb3IucnZ0';
 
 Autodesk.Viewing.Initializer(options, function onInitialized() {
     Autodesk.Viewing.Document.load(documentId, onDocumentLoadSuccess, onDocumentLoadFailure);
@@ -189,9 +259,11 @@ function onDocumentLoadSuccess(doc) {
 
     //////////////////Viewer with Autodesk Toolbar///////////////////////
     viewer = new Autodesk.Viewing.Private.GuiViewer3D(viewerDiv, config);
+
     //////////////////////////////////////////////////////////////////////
 
     viewer.start(svfUrl, modelOptions, onLoadModelSuccess, onLoadModelError);
+    document.getElementsByClassName('adsk-viewing-viewer notouch')[0].style.width = "60%";
 }
 
 
@@ -202,7 +274,15 @@ function onDocumentLoadFailure(viewerErrorCode) {
 function onLoadModelSuccess(model) {
     console.log('onLoadModelSuccess()!');
     console.log('Validate model loaded: ' + (viewer.model === model));
-    console.log(model);
+    //code before the pause
+    setTimeout(function(){
+        //do what you need here
+        OCWindow('close');
+        RouteSetting(false);
+    }, 1000);
+    //Bellow is Markup function
+    //SetMarkup();
+    //render();
 }
 
 function onLoadModelError(viewerErrorCode) {
@@ -404,4 +484,234 @@ function setMaterial(fragId, material) {
         
     viewer.model.getFragmentList().setMaterial(fragId, material);
     viewer.impl.invalidate(true);
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////
+//
+// image upload zone
+//
+/////////////////////////////////////////////////////////////////////////////////
+
+var image_base64;
+
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            $('#imagePreview').attr('src', e.target.result);
+            
+            $('#imagePreview').hide();
+            $('#imagePreview').fadeIn(650);
+            var parameters = { search :e.target.result.split(',')[1]};
+            image_base64 = parameters;
+            jQuery.ajax({
+                url: '/user/insert',
+                async: false,
+                dataType: "json",
+                cache: false, 
+                contentType: "application/json",
+                
+                type:"POST",
+                data: JSON.stringify(parameters),
+                
+                success: function (result) {
+                
+                    $("#result").html(result);
+                  
+                  
+                },
+                error: function(xhr) {
+                    console.log(xhr);
+                  },
+              });
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+$("#imageupload").change(function() {
+    readURL(this);
+});
+
+
+/////////////////////////////////////////////////////////////////////////////////
+//
+// markup3D
+//
+/////////////////////////////////////////////////////////////////////////////////
+/*
+var sphere;
+var spherereq;
+function SetMarkup()
+{
+
+    // setup dimensions of the sphere
+    var radius = 1;
+    var widthSegments = 100;
+    var heightSegments = 100;
+    var geometry = new THREE.SphereGeometry( radius, widthSegments, heightSegments );
+
+    //set material
+    var material = new THREE.MeshPhongMaterial( { color: 0xff0000,transparent: true, opacity: 0.5 } );
+    viewer.impl.matman().addMaterial(
+        'transparent',
+        material,
+        true)
+
+    //Create sphere
+    sphere = new THREE.Mesh( geometry, material );
+
+    //Set Markup position
+    sphere.position.set(10,10,10)
+    // prevents issue when running viewer selection
+    sphere.geometry.attributes = {position:{array:[]}}
+    // add to our scene
+    viewer.impl.sceneAfter.add(sphere)
+    viewer.impl.invalidate(true)
+
+    // prevents your mesh from being hidden
+    // when hidding other viewer components
+    viewer.setGhosting(false)
+    
+}
+
+// create render function. We use requestAnimationFrame.
+function render(){
+    var fps = 10
+    //throttle requestAnimationFrame to custom fps
+    setTimeout(function(){ 
+        spherereq = requestAnimationFrame( render );
+    }, 1000/fps)
+    // set the markup's scale
+    sphere.scale.x += 0.05;
+    sphere.scale.y += 0.05;
+    sphere.scale.z += 0.05;
+    if(sphere.scale.x > 2)
+    {
+        sphere.scale.x = 1;
+        sphere.scale.y = 1;
+        sphere.scale.z = 1;
+
+    }
+    // setting var 3 to true enables invalidation even without changing scene
+    viewer.impl.invalidate(true, false, true);
+}
+
+*/
+
+/////////////////////////////////////////////////////////////////////////////////
+//
+// 4D model 
+//
+/////////////////////////////////////////////////////////////////////////////////
+/*
+var instanceTree = viewer.model.getData().instanceTree;
+
+var allDbIdsStr = Object.keys(instanceTree.nodeAccess.dbIdToIndex);
+
+var dbids = [];
+
+allDbIdsStr.forEach(function(elem){viewer.impl.visibilityManager.setNodeOff(Number(elem), true);dbids.push(Number(elem))});
+
+viewer.model.getBulkProperties(dbids, ['time'],
+   function(elements){
+     let dbIds = [];
+     let filterValue = '2018-08-20';
+
+     for(let i=0; i<elements.length; i++) {
+       const prop = elements[i].properties[0];
+       const dbId = elements[i].dbId;
+       if(prop.displayValue <= filterValue) {
+         dbIds.push( dbId );
+       }
+     }
+     dbIds.forEach(function(elem){viewer.impl.visibilityManager.setNodeOff(Number(elem), false);});
+   });
+   */
+
+   
+/////////////////////////////////////////////////////////////////////////////////
+//
+// Color Bar
+//
+/////////////////////////////////////////////////////////////////////////////////
+function SetTriangle(percent)
+{
+    document.getElementById('triangle').style.left = percent;
+
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////
+//
+// Window
+//
+/////////////////////////////////////////////////////////////////////////////////
+
+function OCWindow(OorC)
+{
+    var OorC2 = '';
+    if(OorC == 'close')
+    {
+        OorC= '開固定窗';
+        OorC2= '固定窗';
+        SetTriangle('-30%');
+    }
+    else
+    {
+        OorC= '固定窗';
+        OorC2= '開固定窗';
+        SetTriangle('0%');
+    }
+
+    var instanceTree = viewer.model.getData().instanceTree;
+    
+    var allDbIdsStr = Object.keys(instanceTree.nodeAccess.dbIdToIndex);
+    
+    var dbids = [];
+    var dbids_show = [];
+    
+    allDbIdsStr.forEach(function(elem){dbids.push(Number(elem))});
+    
+    viewer.model.getBulkProperties(dbids, ['name'],
+       function(elements){
+         let dbIds = [];
+    
+         for(let i=0; i<elements.length; i++) {
+           const prop = elements[i].name;
+           const dbId = elements[i].dbId;
+           if(prop.split('-')[0] == OorC) {
+             dbIds.push( dbId );
+           }
+           if(prop.split('-')[0] == OorC2) {
+            dbids_show.push( dbId );
+          }
+         }
+         dbIds.forEach(function(elem){viewer.impl.visibilityManager.setNodeOff(Number(elem), true);});
+         dbids_show.forEach(function(elem){viewer.impl.visibilityManager.setNodeOff(Number(elem), false);});
+       });
+
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////
+//
+// Evacuation Route
+//
+/////////////////////////////////////////////////////////////////////////////////
+
+function RouteSetting(routeSetting)
+{
+    if(routeSetting == true)
+    {
+        viewer.impl.visibilityManager.setNodeOff(Number(12776), false);
+        SetTriangle('-20%');
+    }
+    else
+    {
+        viewer.impl.visibilityManager.setNodeOff(Number(12776), true);
+        SetTriangle('0%');
+    }
+
 }

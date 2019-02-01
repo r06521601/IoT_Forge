@@ -1,26 +1,23 @@
 <!DOCTYPE html>
-<html class="no-js" lang="">
+<html class="no-js" lang="" id= "html" style="margin: 0;padding: 0;">
 
-<head>
+<head id= "head" style="margin: 0;padding: 0;">
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="description" content="">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="initial-scale=1">
 
-    <title>Forge Viewer Sample</title>
+    <title>NTUCAEBIM</title>
 
     <!-- Common packages: JQuery & Bootstrap -->
-    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
 
-    <link rel="stylesheet" href="/css/main.css">
+    <!--<link rel="stylesheet" href="/css/main.css">-->
 
     <script src="/js/jquery.min.js"></script>
-    <script src="/js/moment.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
 
     <!-- The Viewer CSS -->
     <link rel="stylesheet" href="https://developer.api.autodesk.com/modelderivative/v2/viewers/style.min.css?v=v3.3.*" type="text/css">
-
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
     <!-- Viewer API -->
     <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/three.min.js?v=v3.3.*"></script>
     <script src="https://developer.api.autodesk.com/modelderivative/v2/viewers/viewer3D.min.js?v=v3.3.*"></script>
@@ -28,10 +25,10 @@
     <script src="https://www.gstatic.com/charts/loader.js"></script>
     <!-- The Viewer Extensions -->
     <script src="/extensions/SelectionMonitor.js"></script>
-    <script src="/extensions/FocusColor.js"></script>
-    <script src="/extensions/MyToolbarExt.js"></script>
-	<script src="/extensions/MyAwesomePanel"></script>
-    <script src="/extensions/MyAwesomePanelToolbarExt.js"></script>
+    <!--<script src="/extensions/FocusColor.js"></script>-->
+    <!--<script src="/extensions/MyToolbarExt.js"></script>-->
+	<!--<script src="/extensions/MyAwesomePanel"></script>-->
+    <!--<script src="/extensions/MyAwesomePanelToolbarExt.js"></script>-->
     <script src="/extensions/simpleheat.js"></script>
     <!-- The Viewer JS -->
     <script src="/js/oauth.js"></script>
@@ -71,17 +68,56 @@
         </script>
 
 </head>
-
-
-
+                  
+<body id="body" style="margin: 0;padding: 0;background-color:LightGray;">
     <!--NavBar-->
-    <div class="container">
-        <!-- This is where your viewer should attach -->
-        <div class="center-block" id="viewerDiv" style="border:1px solid #d3d3d3;"></div>
+    <div class="center-block" id="viewerDiv" style="width: 50%; float: left;border:1px solid #d3d3d3;"></div>
+
+    <div id="counter" style="width: 40%; float: right;height: 100%;border:1px solid #d3d3d3;">
+        <center>
+            <h1 id="h2">Sensor Data</h1>
+        </center>
         
-       
-    </div><!-- /container -->
+        <center>
+        <div id="curve_chart" style="border:1px solid #d3d3d3;width: 80%; height: 400px;" ></div>
+        
+    </center>
     
-    <div id="curve_chart" style="border:1px solid #d3d3d3;"></div>
+        <!-- <div id="upload_zone">
+                    <center>
+                        <h1 id="h1">Upload Image</h1>
+                    </center>
+        </div>
+        <center>
+        <img id="imagePreview" src="https://sites.google.com/a/caece.net/eg2012f2/_/rsrc/1350396315293/tu-mu-yan-jiu-da-lou/DSCI0142.jpeg" style="width: 60%; height: 40%;margin:0px auto;"></img>
+    </center>
+                    <center>
+                    <label class="btn btn-info" id= "uploadlabel">
+                            <input id="imageupload" style="display:none;" type="file" accept="image/*">
+                            <i class="fa fa-photo"></i> Upload
+                            </label>
+                        </center>-->
+                      
+                        
+    <center> 
+        <img id="buildingmap" src="images/map.png" style="width: 80%; height: 40%"></img>
+    </center>
+    <center> 
+        <img id="triangle" src="images/triangle.png" style="width: 30px; height: 5%;position:relative;left:0%;"></img>
+    </center>
+        
+        <center>
+        <img id="colorbar" src="images/colorbar.png" style="width: 80%; height: 15%"></img>
+    </center>
+                        
+    </div>
+                        
+    
+</body>
+    
+    
+
+    
+        
 
 </html>
