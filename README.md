@@ -44,7 +44,7 @@ Roy Huang <br />
 
 National Taiwan University<br />
 
-Civil Engineering - Department of Computer Added Engineering<br />
+Civil Engineering - Department of Computer-Aided Engineering<br />
 
 ## Reference
 Jaime Rosales D. <br /> 
